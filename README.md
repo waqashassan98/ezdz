@@ -197,6 +197,11 @@ Remove Ezdz from the input and get back to normal.
 
     $('[type="file"]').ezdz('destroy');
 
+### Enable filereader API
+   $('[type="file"]').ezdz({
+		text: 'drop the file',
+		is_Image: true});
+
 Functions
 ---------
 
