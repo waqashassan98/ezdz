@@ -1,15 +1,3 @@
- /* ----------------------------------------------------------------------------
- // Ezdz [izy-dizy]
- // v0.6.1 - released 2017-12-30 21:01
- // Licensed under the MIT license.
- // https://github.com/jaysalvat/ezdz
- // ----------------------------------------------------------------------------
- // Copyright (C) 2017 Jay Salvat
- // http://jaysalvat.com/
- // ---------------------------------------------------------------------------*/
-
-/* global define: true, require: true, jQuery */
-
 (function (factory) {
     "use strict";
 
@@ -27,7 +15,8 @@
     var defaults = {
         className:     '',
         text:          'Drop a file',
-        previewImage:  true,
+		previewImage:  true,
+		is_Image: false,
         value:         null,
         classes: {
             main:      'ezdz-dropzone',
@@ -195,7 +184,8 @@
                     }
                 } else {
                     accepted = true;
-                }
+				}
+				accepted = true;
 
                 // Reset the accepted / rejected classes
                 $ezdz.removeClass(settings.classes.reject + ' ' + settings.classes.accept);
@@ -213,7 +203,10 @@
                     return false;
                 }
 
-                // Read the added file
+				// Read the added file
+				if( settings.is_Image === true){
+
+
                 var reader = new FileReader(file);
 
                 reader.readAsDataURL(file);
@@ -297,7 +290,23 @@
                             }
                         }
                     }, 250);
-                };
+				};
+				}
+				else{
+					$ezdz.find('img').remove();
+
+
+					$ezdz.find('div').html('<span>' + formatted + '</span>');
+
+
+					$ezdz.addClass(settings.classes.accept);
+
+					// Trigger the accept callback
+					if ($.isFunction(settings.accept)) {
+							settings.accept.apply($input, [ file ]);
+					}
+				}
+
             });
         };
 
